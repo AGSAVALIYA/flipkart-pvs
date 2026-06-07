@@ -1,0 +1,68 @@
+# Dependencies
+node_modules/
+.venv/
+env/
+venv/
+ENV/
+bin/
+lib/
+include/
+share/
+
+# Python caching & testing
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.cache/
+.uv/
+
+# Build & compiled outputs
+dist/
+build/
+out/
+.next/
+*.tsbuildinfo
+*.egg-info/
+
+# Local configuration & secrets
+.env
+.env.*
+!.env.example
+!.env.sample
+alembic.ini.local
+
+# Database & Storage
+storage/
+backend/storage/
+*.db
+*.sqlite3
+
+# Large CSVs & Local Datasets
+*.csv
+product_data.csv
+
+# IDEs & System files
+.DS_Store
+Thumbs.db
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+
+# Project specific agents
+.agent/
+.agents/
+goal/
+
+# Logs
+logs/
+*.log
+backend/logs/

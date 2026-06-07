@@ -1,0 +1,45 @@
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/python:3.13
+    volumes:
+      - ..:/workspace:cached
+    command: sleep infinity
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://flipkart_admin:password123@db:5432/product_verification
+      - REDIS_URL=redis://redis:6379/0
+    ports:
+      - "3000:3000"
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    networks:
+      - flipkart_net
+
+  db:
+    image: postgres:17-alpine3.22
+    restart: always
+    environment:
+      POSTGRES_USER: flipkart_admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: product_verification
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - flipkart_net
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - flipkart_net
+
+volumes:
+  postgres_data:
+
+networks:
+  flipkart_net:

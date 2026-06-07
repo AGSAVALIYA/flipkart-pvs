@@ -1,0 +1,1 @@
+"""Application settings vertical slice."""
