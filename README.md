@@ -163,9 +163,32 @@ External third-party API calls and network calls are inherently unreliable. The 
 
 ## 7. Setup & Running the Development Environment
 
+You can spin up the entire application stack including the PostgreSQL database, Redis cache, backend API, and frontend client with a single command using Docker Compose, or run services manually.
+
+### Option A: Docker Compose (Recommended - Single Command)
+
+This option automatically provisions all databases, runs Alembic migrations, links services, and exposes the app:
+
+1. Make sure you have **Docker** and **Docker Compose** installed.
+2. From the repository root, run:
+   ```bash
+   docker compose up --build
+   ```
+3. Docker will build and launch all containers:
+   - **Frontend UI**: Available at [http://localhost:3000](http://localhost:3000) (Nginx reverse-proxies `/api` and `/storage` traffic to the backend automatically)
+   - **Backend API Docs**: Available at [http://localhost:8000/docs](http://localhost:8000/docs)
+   - **Postgres Database**: Exposed on port `5432`
+   - **Redis Cache**: Exposed on port `6379`
+   
+*Note: Alembic database migrations run automatically inside the backend container on startup.*
+
+---
+
+### Option B: Dev Container / Manual Setup
+
 The project is pre-configured to build, run, and debug inside an isolated VS Code **Dev Container**, eliminating "it works on my machine" inconsistencies.
 
-### Step 1: Open the Project in Dev Container
+#### Step 1: Open the Project in Dev Container
 1. Open the repository in VS Code (with the **Dev Containers** extension installed).
 2. Click **Reopen in Container** when prompted. The container automatically installs Python 3.13, Node.js 20, and provisions PostgreSQL and Redis services.
 

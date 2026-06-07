@@ -24,12 +24,20 @@ if config.config_file_name is not None:
 target_metadata = Base.metadata
 
 
+import os
+
+def get_url() -> str:
+    env_url = os.getenv("DATABASE_URL")
+    if env_url:
+        return env_url
+    return config.get_main_option("sqlalchemy.url") or ""
+
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
 
     Generates SQL script without connecting to the database.
     """
-    url = config.get_main_option("sqlalchemy.url")
+    url = get_url()
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -51,8 +59,13 @@ def do_run_migrations(connection) -> None:
 
 async def run_async_migrations() -> None:
     """Run migrations in 'online' mode with async engine."""
+    section = config.get_section(config.config_ini_section, {})
+    env_url = os.getenv("DATABASE_URL")
+    if env_url:
+        section["sqlalchemy.url"] = env_url
+
     connectable = async_engine_from_config(
-        config.get_section(config.config_ini_section, {}),
+        section,
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
